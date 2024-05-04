@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NotificationGo</string>
+    <string name="common_notification">普通通知</string>
+    <string name="common_content">这是一条普通通知</string>
+    <string name="clickable_notification">可点击普通通知</string>
+    <string name="clickable_content">这是一条可点击普通通知</string>
+    <string name="default_notification">Default notification</string>
+
+</resources>
