@@ -6,4 +6,12 @@
     <string name="clickable_content">这是一条可点击普通通知</string>
     <string name="default_notification">Default notification</string>
 
+    <string name="importance_notification">重要通知</string>
+    <string name="importance_content">这是一条可点击的重要通知</string>
+    <string name="importance_clickable_notification">可点击重要通知</string>
+
+    <string name="fullscreen_notification">全屏通知</string>
+    <string name="fullscreen_content">这是一条全屏通知</string>
+    <string name="deal_important_notification">您有一条重要通知，请先处理</string>
+
 </resources>
