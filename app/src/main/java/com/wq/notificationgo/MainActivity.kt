@@ -2,6 +2,7 @@ package com.wq.notificationgo
 
 import android.app.NotificationManager
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
@@ -13,10 +14,15 @@ import com.wq.notificationgo.databinding.ActivityMainBinding
 
 const val IMPORTANT_ID = 1000
 const val KEY_NOTIFICATION_ID = "key_notification_id"
+const val KEY_FROM = "key_from"
+const val FROM_NORMAL_NOTIFICATION = 1
+const val FROM_FULLSCREEN_NOTIFICATION = 2
 private const val TAG = "TAG_MainActivity"
-class MainActivity : BaseActivity(),OnClickListener{
+
+class MainActivity : BaseActivity(), OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var countDownTimer: CountDownTimer
 
     private var notificationId = IMPORTANT_ID
     private val idList = ArrayList<Int>()
@@ -26,6 +32,7 @@ class MainActivity : BaseActivity(),OnClickListener{
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
+        countDownTimer = MyCountDownTimer()
     }
 
     private fun initView() {
@@ -36,7 +43,7 @@ class MainActivity : BaseActivity(),OnClickListener{
     }
 
     override fun onClick(view: View?) {
-        when(view?.id){
+        when (view?.id) {
             R.id.tvCommon -> {
                 val title = resources.getString(R.string.common_notification)
                 val content = resources.getString(R.string.common_content)
@@ -48,7 +55,8 @@ class MainActivity : BaseActivity(),OnClickListener{
                     "common_id"
                 )
             }
-            R.id.tvCommonClickable ->{
+
+            R.id.tvCommonClickable -> {
                 val title = resources.getString(R.string.clickable_notification)
                 val content = resources.getString(R.string.clickable_content)
                 NotificationUtil.showClickableNotification(
@@ -59,14 +67,10 @@ class MainActivity : BaseActivity(),OnClickListener{
                     "common_id"
                 )
             }
-            R.id.tvImportant->{
-//                if(isNotificationActive()){
-//                    val tip = resources.getString(R.string.deal_important_notification)
-//                    Toast.makeText(this,tip, Toast.LENGTH_LONG).show()
-//                    return
-//                }
+
+            R.id.tvImportant -> {
                 ++notificationId
-                val title = resources.getString(R.string.importance_notification)+notificationId
+                val title = resources.getString(R.string.importance_notification) + notificationId
                 val content = resources.getString(R.string.importance_content)
                 AdvancedNotificationUtil.showImportantNotification(
                     this,
@@ -78,36 +82,56 @@ class MainActivity : BaseActivity(),OnClickListener{
                 )
                 idList.add(notificationId)
             }
-            R.id.tvFullscreen ->{
-                val title = resources.getString(R.string.fullscreen_notification)
-                val content = resources.getString(R.string.fullscreen_content)
-                AdvancedNotificationUtil.showFullscreenNotification(
-                    this,
-                    mNotificationManager,
-                    title,
-                    content,
-                    "fullscreen_id",
-                    ++notificationId
-                )
-                idList.add(notificationId)
+
+            R.id.tvFullscreen -> {
+                countDownTimer.start()
             }
         }
     }
 
-    private fun cancelAll(){
-        for (id in idList){
-            AdvancedNotificationUtil.cancelNotification(mNotificationManager,id)
+    private fun showFullScreenNotification() {
+        val title = resources.getString(R.string.fullscreen_notification)
+        val content = resources.getString(R.string.fullscreen_content)
+        AdvancedNotificationUtil.showFullscreenNotification(
+            this,
+            mNotificationManager,
+            title,
+            content,
+            "fullscreen_id",
+            ++notificationId
+        )
+        idList.add(notificationId)
+    }
+
+    private fun cancelAll() {
+        for (id in idList) {
+            AdvancedNotificationUtil.cancelNotification(mNotificationManager, id)
         }
         idList.clear()
     }
 
-    private fun isNotificationActive():Boolean{
+    private fun isNotificationActive(): Boolean {
         val activeNotifications = mNotificationManager.activeNotifications
         if (activeNotifications.isEmpty()) return false
-        for (item in activeNotifications){
-            Log.e(TAG,"id = ${item.id}, isOnGoing = ${item.isOngoing}")
+        for (item in activeNotifications) {
+            Log.e(TAG, "id = ${item.id}, isOnGoing = ${item.isOngoing}")
             if (item.isOngoing) return true
         }
         return false
+    }
+
+    inner class MyCountDownTimer : CountDownTimer(5000L, 1000L) {
+        override fun onTick(mill: Long) {
+            binding.tvFullscreen.isEnabled = false
+            binding.tvFullscreen.text = "${mill / 1000}"
+        }
+
+        override fun onFinish() {
+            binding.tvFullscreen.isEnabled = true
+            binding.tvFullscreen.text =
+                this@MainActivity.resources.getString(R.string.fullscreen_notification)
+            showFullScreenNotification()
+        }
+
     }
 }

@@ -102,6 +102,7 @@ object AdvancedNotificationUtil {
                     NotificationActivity::class.java
                 ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.putExtra(KEY_NOTIFICATION_ID, notificationId)
+                intent.putExtra(KEY_FROM,FROM_NORMAL_NOTIFICATION)
                 PendingIntent.getActivity(
                     context,
                     0,
@@ -129,6 +130,7 @@ object AdvancedNotificationUtil {
             context,
             NotificationActivity::class.java
         ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra(KEY_FROM,FROM_FULLSCREEN_NOTIFICATION)
         return PendingIntent.getActivity(
             context,
             0,

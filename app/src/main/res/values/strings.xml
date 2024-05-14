@@ -14,4 +14,7 @@
     <string name="fullscreen_content">这是一条全屏通知</string>
     <string name="deal_important_notification">您有一条重要通知，请先处理</string>
 
+    <string name="from_notification">被通知打开的页面</string>
+    <string name="from_fullscreen">被全屏通知打开的页面</string>
+
 </resources>
