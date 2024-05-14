@@ -131,6 +131,7 @@ class MainActivity : BaseActivity(), OnClickListener {
             binding.tvFullscreen.text =
                 this@MainActivity.resources.getString(R.string.fullscreen_notification)
             showFullScreenNotification()
+            ScreenUtil.wakeupScreen(this@MainActivity)
         }
 
     }
