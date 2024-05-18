@@ -2,6 +2,7 @@ package com.wq.notificationgo.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.wq.notificationgo.AdvancedNotificationUtil
 import com.wq.notificationgo.FROM_NORMAL_NOTIFICATION
@@ -22,6 +23,7 @@ class NotificationActivity : BaseActivity() {
         setContentView(binding.root)
         val id = intent.getIntExtra(KEY_NOTIFICATION_ID, -1)
         Log.i(TAG, "id = $id")
+        addFlags()
         cancelNotification(id)
         initData()
     }
@@ -41,4 +43,12 @@ class NotificationActivity : BaseActivity() {
         binding.tvContent.text = msg
     }
 
+    private fun addFlags(){
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+        or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+        )
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
+    }
 }

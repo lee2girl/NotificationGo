@@ -103,22 +103,6 @@ class MainActivity : BaseActivity(), OnClickListener {
         idList.add(notificationId)
     }
 
-    private fun cancelAll() {
-        for (id in idList) {
-            AdvancedNotificationUtil.cancelNotification(mNotificationManager, id)
-        }
-        idList.clear()
-    }
-
-    private fun isNotificationActive(): Boolean {
-        val activeNotifications = mNotificationManager.activeNotifications
-        if (activeNotifications.isEmpty()) return false
-        for (item in activeNotifications) {
-            Log.e(TAG, "id = ${item.id}, isOnGoing = ${item.isOngoing}")
-            if (item.isOngoing) return true
-        }
-        return false
-    }
 
     inner class MyCountDownTimer : CountDownTimer(5000L, 1000L) {
         override fun onTick(mill: Long) {
