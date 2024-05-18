@@ -12,7 +12,7 @@ import com.wq.notificationgo.activity.BaseActivity
 import com.wq.notificationgo.databinding.ActivityMainBinding
 
 
-const val IMPORTANT_ID = 1000
+const val IMPORTANT_ID = 9000
 const val KEY_NOTIFICATION_ID = "key_notification_id"
 const val KEY_FROM = "key_from"
 const val FROM_NORMAL_NOTIFICATION = 1
