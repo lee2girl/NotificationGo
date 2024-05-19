@@ -3,8 +3,7 @@ package com.wq.notificationgo.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
-import com.wq.notificationgo.AdvancedNotificationUtil
+import com.wq.notificationgo.core.AdvancedNotificationUtil
 import com.wq.notificationgo.FROM_NORMAL_NOTIFICATION
 import com.wq.notificationgo.KEY_FROM
 import com.wq.notificationgo.KEY_NOTIFICATION_ID

@@ -1,4 +1,4 @@
-package com.wq.notificationgo;
+package com.wq.notificationgo.constant;
 
 import androidx.annotation.IntDef;
 

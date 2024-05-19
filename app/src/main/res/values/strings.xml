@@ -16,5 +16,7 @@
 
     <string name="from_notification">被通知打开的页面</string>
     <string name="from_fullscreen">被全屏通知打开的页面</string>
-
+    <string name="permission_denied">获取权限失败</string>
+    <string name="permission_grant_partially">获取部分权限成功，但部分权限未正常授予</string>
+    <string name="permission_forbidden">被永久拒绝授权，请手动授予</string>
 </resources>

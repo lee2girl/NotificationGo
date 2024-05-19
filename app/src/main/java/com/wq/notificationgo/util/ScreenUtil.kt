@@ -1,4 +1,4 @@
-package com.wq.notificationgo
+package com.wq.notificationgo.util
 
 import android.content.Context
 import android.os.PowerManager

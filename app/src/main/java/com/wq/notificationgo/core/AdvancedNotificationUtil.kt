@@ -1,4 +1,4 @@
-package com.wq.notificationgo
+package com.wq.notificationgo.core
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -6,9 +6,15 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.wq.notificationgo.FROM_FULLSCREEN_NOTIFICATION
+import com.wq.notificationgo.FROM_NORMAL_NOTIFICATION
+import com.wq.notificationgo.KEY_FROM
+import com.wq.notificationgo.KEY_NOTIFICATION_ID
+import com.wq.notificationgo.constant.NotificationBehaviorType
+import com.wq.notificationgo.service.NotificationService
+import com.wq.notificationgo.R
 import com.wq.notificationgo.activity.NotificationActivity
 
 object AdvancedNotificationUtil {
@@ -22,7 +28,6 @@ object AdvancedNotificationUtil {
         channelId: String,
         notificationId: Int
     ) {
-//        Log.e("tag_notification","enable = ${nm.areNotificationsEnabled()}")
         val pendingIntent =
             getPendingIntent(context, NotificationBehaviorType.GO_ACTIVITY, notificationId)
         applyChannel(context, nm, channelId, NotificationManager.IMPORTANCE_MAX)
@@ -31,14 +36,11 @@ object AdvancedNotificationUtil {
             .setContentTitle(title)
             .setContentText(content)
             .setContentIntent(pendingIntent)
-//            .setOngoing(true)
-//            .setAutoCancel(false)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)//勿扰模式下没有声音，CATEGORY_MESSAGE也一样
             //锁屏时显示。VISIBILITY_PUBLIC： 显示通知小图标、通知标题、全部内容，
             //VISIBILITY_PRIVATE： 只显示通知小图标、标题，隐藏全部内容
             //VISIBILITY_SECRET： 不显示该条通知
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-//            .setLocalOnly(true)
         nm.notify(notificationId, build.build())
     }
 
@@ -102,7 +104,7 @@ object AdvancedNotificationUtil {
                     NotificationActivity::class.java
                 ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.putExtra(KEY_NOTIFICATION_ID, notificationId)
-                intent.putExtra(KEY_FROM,FROM_NORMAL_NOTIFICATION)
+                intent.putExtra(KEY_FROM, FROM_NORMAL_NOTIFICATION)
                 PendingIntent.getActivity(
                     context,
                     0,
@@ -130,7 +132,7 @@ object AdvancedNotificationUtil {
             context,
             NotificationActivity::class.java
         ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.putExtra(KEY_FROM,FROM_FULLSCREEN_NOTIFICATION)
+        intent.putExtra(KEY_FROM, FROM_FULLSCREEN_NOTIFICATION)
         return PendingIntent.getActivity(
             context,
             0,

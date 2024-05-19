@@ -1,15 +1,16 @@
 package com.wq.notificationgo
 
-import android.app.NotificationManager
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.wq.notificationgo.activity.BaseActivity
+import com.wq.notificationgo.core.AdvancedNotificationUtil
+import com.wq.notificationgo.core.NotificationUtil
 import com.wq.notificationgo.databinding.ActivityMainBinding
+import com.wq.notificationgo.util.PermissionUtil
+import com.wq.notificationgo.util.ScreenUtil
 
 
 const val IMPORTANT_ID = 9000
@@ -25,7 +26,6 @@ class MainActivity : BaseActivity(), OnClickListener {
     private lateinit var countDownTimer: CountDownTimer
 
     private var notificationId = IMPORTANT_ID
-    private val idList = ArrayList<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,48 +45,114 @@ class MainActivity : BaseActivity(), OnClickListener {
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.tvCommon -> {
-                val title = resources.getString(R.string.common_notification)
-                val content = resources.getString(R.string.common_content)
-                NotificationUtil.showCommonNotification(
-                    this,
-                    mNotificationManager,
-                    title,
-                    content,
-                    "common_id"
-                )
+                PermissionUtil.requestNotificationPermission(this,
+                    object : PermissionUtil.PermissionCallback {
+                        override fun onGrant() {
+                            showCommonNotification()
+                        }
+
+                        override fun onDenied() {
+                            Toast.makeText(
+                                this@MainActivity,
+                                getString(R.string.permission_denied),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
             }
 
             R.id.tvCommonClickable -> {
-                val title = resources.getString(R.string.clickable_notification)
-                val content = resources.getString(R.string.clickable_content)
-                NotificationUtil.showClickableNotification(
-                    this,
-                    mNotificationManager,
-                    title,
-                    content,
-                    "common_id"
-                )
+                PermissionUtil.requestNotificationPermission(this,
+                    object : PermissionUtil.PermissionCallback {
+                        override fun onGrant() {
+                            showClickableNotification()
+                        }
+
+                        override fun onDenied() {
+                            Toast.makeText(
+                                this@MainActivity,
+                                getString(R.string.permission_denied),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
             }
 
             R.id.tvImportant -> {
-                ++notificationId
-                val title = resources.getString(R.string.importance_notification) + notificationId
-                val content = resources.getString(R.string.importance_content)
-                AdvancedNotificationUtil.showImportantNotification(
-                    this,
-                    mNotificationManager,
-                    title,
-                    content,
-                    "important_id",
-                    notificationId
-                )
-                idList.add(notificationId)
+                PermissionUtil.requestNotificationPermission(this,
+                    object : PermissionUtil.PermissionCallback {
+                        override fun onGrant() {
+                            showImportantNotification()
+                        }
+
+                        override fun onDenied() {
+                            Toast.makeText(
+                                this@MainActivity,
+                                getString(R.string.permission_denied),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
             }
 
             R.id.tvFullscreen -> {
-                countDownTimer.start()
+                PermissionUtil.requestNotificationPermission(this,
+                    object : PermissionUtil.PermissionCallback {
+                        override fun onGrant() {
+                            countDownTimer.start()
+                        }
+
+                        override fun onDenied() {
+                            Toast.makeText(
+                                this@MainActivity,
+                                getString(R.string.permission_denied),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
             }
         }
+    }
+
+    private fun showCommonNotification(){
+        val title = resources.getString(R.string.common_notification)
+        val content = resources.getString(R.string.common_content)
+        NotificationUtil.showCommonNotification(
+            this,
+            mNotificationManager,
+            title,
+            content,
+            "common_id"
+        )
+    }
+
+    private fun showClickableNotification(){
+        val title = resources.getString(R.string.clickable_notification)
+        val content = resources.getString(R.string.clickable_content)
+        NotificationUtil.showClickableNotification(
+            this,
+            mNotificationManager,
+            title,
+            content,
+            "clickable_common_id"
+        )
+    }
+    private fun showImportantNotification() {
+        ++notificationId
+        val title = resources.getString(R.string.importance_notification) + notificationId
+        val content = resources.getString(R.string.importance_content)
+        AdvancedNotificationUtil.showImportantNotification(
+            this,
+            mNotificationManager,
+            title,
+            content,
+            "important_id",
+            notificationId
+        )
     }
 
     private fun showFullScreenNotification() {
@@ -100,7 +166,6 @@ class MainActivity : BaseActivity(), OnClickListener {
             "fullscreen_id",
             ++notificationId
         )
-        idList.add(notificationId)
     }
 
 
@@ -117,6 +182,5 @@ class MainActivity : BaseActivity(), OnClickListener {
             showFullScreenNotification()
             ScreenUtil.wakeupScreen(this@MainActivity)
         }
-
     }
 }

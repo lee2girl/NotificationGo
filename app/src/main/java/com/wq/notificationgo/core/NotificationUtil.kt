@@ -1,4 +1,4 @@
-package com.wq.notificationgo
+package com.wq.notificationgo.core
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,15 +8,15 @@ import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.wq.notificationgo.R
 import com.wq.notificationgo.activity.NotificationActivity
-
-private const val COMMON_ID = 100
 
 /**
  * @author lee
  * @since 2024/5/4
  * @desc default notification
  */
+private const val COMMON_ID = 100
 object NotificationUtil {
 
     fun showCommonNotification(
@@ -73,10 +73,10 @@ object NotificationUtil {
         val name = context.resources.getString(R.string.default_notification)
         val channel = NotificationChannel(channelId, name, NotificationManager.IMPORTANCE_DEFAULT)
         channel.setShowBadge(false)
-        channel.enableLights(false)
-        channel.enableVibration(false)
-        channel.setSound(null, null)
-        channel.setBypassDnd(true)
+//        channel.enableLights(false)
+//        channel.enableVibration(false)
+//        channel.setSound(null, null)
+//        channel.setBypassDnd(true)
         nm.createNotificationChannel(channel)
         return channel
     }
