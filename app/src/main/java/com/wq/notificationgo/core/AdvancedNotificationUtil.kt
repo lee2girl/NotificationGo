@@ -131,7 +131,7 @@ object AdvancedNotificationUtil {
         val intent = Intent(
             context,
             NotificationActivity::class.java
-        ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.putExtra(KEY_FROM, FROM_FULLSCREEN_NOTIFICATION)
         return PendingIntent.getActivity(
             context,

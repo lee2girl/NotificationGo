@@ -8,6 +8,9 @@ import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.wq.notificationgo.FROM_CLICKABLE_NOTIFICATION
+import com.wq.notificationgo.FROM_FULLSCREEN_NOTIFICATION
+import com.wq.notificationgo.KEY_FROM
 import com.wq.notificationgo.R
 import com.wq.notificationgo.activity.NotificationActivity
 
@@ -84,6 +87,7 @@ object NotificationUtil {
     private fun getPendingIntent(context: Context): PendingIntent {
         val intent = Intent(context, NotificationActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra(KEY_FROM, FROM_CLICKABLE_NOTIFICATION)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 }

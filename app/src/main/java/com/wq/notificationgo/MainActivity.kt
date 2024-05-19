@@ -18,6 +18,7 @@ const val KEY_NOTIFICATION_ID = "key_notification_id"
 const val KEY_FROM = "key_from"
 const val FROM_NORMAL_NOTIFICATION = 1
 const val FROM_FULLSCREEN_NOTIFICATION = 2
+const val FROM_CLICKABLE_NOTIFICATION = 3
 private const val TAG = "TAG_MainActivity"
 
 class MainActivity : BaseActivity(), OnClickListener {
